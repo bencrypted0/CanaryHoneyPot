@@ -1,0 +1,41 @@
+version: "3.8"
+
+services:
+  opencanary-ssh:
+    image: thinkst/opencanary
+    container_name: honeynet-ssh
+    network_mode: host
+    restart: unless-stopped
+    volumes:
+      - ./logs/ssh:/var/log
+      - ./ssh/opencanary.conf:/root/.opencanary.conf
+
+  opencanary-web:
+    image: thinkst/opencanary
+    container_name: honeynet-web
+    ports:
+      - "80:80"
+    restart: unless-stopped
+    volumes:
+      - ./logs/web:/var/log
+      - ./web/opencanary.conf:/root/.opencanary.conf
+
+  opencanary-smb:
+    image: thinkst/opencanary
+    container_name: honeynet-smb
+    ports:
+      - "445:445"
+    restart: unless-stopped
+    volumes:
+      - ./logs/smb:/var/log
+      - ./smb/opencanary.conf:/root/.opencanary.conf
+
+  opencanary-mysql:
+    image: thinkst/opencanary
+    container_name: honeynet-mysql
+    ports:
+      - "3306:3306"
+    restart: unless-stopped
+    volumes:
+      - ./logs/mysql:/var/log
+      - ./mysql/opencanary.conf:/root/.opencanary.conf
